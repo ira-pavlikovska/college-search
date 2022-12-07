@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Box} from '@mui/system';
 import Grid from '@mui/system/Unstable_Grid';
 import styled from '@mui/system/styled';
+import {getSchools} from "../api/schools";
 
 
 const Item = styled('div')(({theme}) => ({
@@ -14,6 +15,15 @@ const Item = styled('div')(({theme}) => ({
 }));
 
 export default function CollegeSearchPage() {
+
+  useEffect(() => {
+    getSchools()
+      .then((resp) => {
+        console.log(JSON.stringify(resp))
+      })
+      .catch(err => console.log(err))
+
+  }, [])
 
   return (
     <Box sx={{flexGrow: 1}}>
