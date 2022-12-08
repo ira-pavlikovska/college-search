@@ -1,43 +1,32 @@
 import React, { useState, Fragment } from "react";
-import ReactDOM from "react-dom";
 
-// We will use these things from the lib
-// https://react-google-maps-api-docs.netlify.com/
 import {
-  useLoadScript,
+  useJsApiLoader,
   GoogleMap,
   Marker,
   InfoWindow
 } from "@react-google-maps/api";
 
-export default function MapComponent() {
+export default function MapComponent({places, center}) {
   // The things we need to track in state
   const [mapRef, setMapRef] = useState(null);
   const [selectedPlace, setSelectedPlace] = useState(null);
   const [markerMap, setMarkerMap] = useState({});
-  const [center, setCenter] = useState({ lat: 44.076613, lng: -98.362239833 });
   const [zoom, setZoom] = useState(5);
   const [clickedLatLng, setClickedLatLng] = useState(null);
   const [infoOpen, setInfoOpen] = useState(false);
 
   // Load the Google maps scripts
-  const { isLoaded } = useLoadScript({
+  const { isLoaded } = useJsApiLoader({
+    id: 'google-map-script',
     // Enter your own Google Maps API key
-    googleMapsApiKey: ""
+    googleMapsApiKey: "AIzaSyAZ92hd1_-_kd0yFbjRCrIaeircv3JJVIM"
   });
-
-  // The places I want to create markers for.
-  // This could be a data-driven prop.
-  const myPlaces = [
-    { id: "place1", pos: { lat: 39.09366509575983, lng: -94.58751660204751 } },
-    { id: "place2", pos: { lat: 39.10894664788252, lng: -94.57926449532226 } },
-    { id: "place3", pos: { lat: 39.07602397235644, lng: -94.5184089401211 } }
-  ];
 
   // Iterate myPlaces to size, center, and zoom map to contain all markers
   const fitBounds = map => {
     const bounds = new window.google.maps.LatLngBounds();
-    myPlaces.map(place => {
+    places.map(place => {
       bounds.extend(place.pos);
       return place.id;
     });
@@ -84,8 +73,6 @@ export default function MapComponent() {
         <GoogleMap
           // Do stuff on map initial laod
           onLoad={loadHandler}
-          // Save the current center position in state
-          // onCenterChanged={() => setCenter(mapRef.getCenter().toJSON())}
           // Save the user's map click position
           onClick={e => setClickedLatLng(e.latLng.toJSON())}
           center={center}
@@ -95,7 +82,7 @@ export default function MapComponent() {
             width: "100%"
           }}
         >
-          {myPlaces.map(place => (
+          {places.map(place => (
             <Marker
               key={place.id}
               position={place.pos}
