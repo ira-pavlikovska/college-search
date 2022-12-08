@@ -20,7 +20,7 @@ export default function MapComponent({places, center}) {
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     // Enter your own Google Maps API key
-    googleMapsApiKey: "AIzaSyAZ92hd1_-_kd0yFbjRCrIaeircv3JJVIM"
+    googleMapsApiKey: ""
   });
 
   // Iterate myPlaces to size, center, and zoom map to contain all markers
