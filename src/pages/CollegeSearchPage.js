@@ -5,6 +5,7 @@ import {getSchools} from "../api/schools";
 import CollegeList from "../components/CollegeList";
 import {InputAdornment} from "@mui/material";
 import {ContainerItem, SearchIcon, SearchInput} from "./CollegeSearchPage.styled";
+import MapComponent from "../components/MapComponent";
 
 export default function CollegeSearchPage() {
 
@@ -47,7 +48,7 @@ export default function CollegeSearchPage() {
           </ContainerItem>
         </Grid>
         <Grid xs={4}>
-          Map
+          <MapComponent/>
         </Grid>
       </Grid>
     </Box>
