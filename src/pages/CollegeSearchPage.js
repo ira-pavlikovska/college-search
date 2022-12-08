@@ -15,28 +15,27 @@ const initPlaces = [
 ];
 
 
-
 export default function CollegeSearchPage() {
 
+  const [keyword, setKeyword] = useState('')
   const [colleges, setColleges] = useState([])
-  const [places, setPlaces] = useState(initPlaces)
+  const [selectedCollege, setSelectedCollege] = useState()
+
+  const handleSchoolSelect = (college) => {
+    console.log(`selected ${college['school.name']} on the page`)
+    setSelectedCollege(college)
+  }
 
   useEffect(() => {
-    getSchools()
+    setSelectedCollege(null)
+    getSchools(keyword)
       .then((resp) => {
         // console.log(JSON.stringify(resp.data.results))
         setColleges(resp.data.results)
-        setPlaces(resp.data.results.map(school => ({
-          id: school['school.name'],
-          pos: {
-            lat: school['location.lat'],
-            lng: school['location.lon']
-          }
-        })))
       })
       .catch(err => console.log(err))
 
-  }, [])
+  }, [keyword])
 
   return (
     <Box sx={{flexGrow: 1}}>
@@ -46,7 +45,8 @@ export default function CollegeSearchPage() {
             <SearchInput
               placeholder="Search for college"
               variant="outlined"
-              onChange={() => {}}
+              onChange={(e) => setKeyword(e.target.value)}
+              value={keyword}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position='start'>
@@ -57,15 +57,17 @@ export default function CollegeSearchPage() {
             />
           </ContainerItem>
         </Grid>
-        <Grid xs={4}>
+        <Grid xs={selectedCollege? 1 : 4}>
         </Grid>
         <Grid xs={4}>
-          <ContainerItem>
-            <CollegeList colleges={colleges} />
-          </ContainerItem>
+          {colleges.length > 0 && (
+            <ContainerItem>
+              <CollegeList colleges={colleges} handleSchoolSelect={handleSchoolSelect}/>
+            </ContainerItem>
+          )}
         </Grid>
-        <Grid xs={4}>
-          <MapComponent places={places} center={places[0].pos}/>
+        <Grid xs={selectedCollege? 7 : 4}>
+          {selectedCollege && <MapComponent college={selectedCollege} />}
         </Grid>
       </Grid>
     </Box>

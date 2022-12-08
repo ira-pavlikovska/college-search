@@ -12,7 +12,7 @@ export const ContainerItem = styled('div')(({theme}) => ({
 }));
 
 export const SearchInput = styled(TextField)`
-  width: 280px;
+  width: 380px;
   height: 40px;
 
   .MuiInputBase-root {

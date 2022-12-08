@@ -7,16 +7,17 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 
-const CollegeItem = ({college}) => {
-
+const CollegeItem = ({college, handleSchoolSelect}) => {
   return (
-    <ListItem alignItems="flex-start" divider={true}>
+    <ListItem
+      onClick={() => handleSchoolSelect(college)}
+      alignItems="flex-start" divider={true}>
       <ListItemText
         primary={college['school.name']}
         secondary={
           <React.Fragment>
             <Typography
-              sx={{ display: 'inline' }}
+              sx={{display: 'inline'}}
               component="span"
               variant="body2"
               color="text.primary"
@@ -30,11 +31,12 @@ const CollegeItem = ({college}) => {
   )
 }
 
-export default function CollegeList({colleges}) {
+export default function CollegeList({colleges, handleSchoolSelect}) {
   return (
-    <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+    <List sx={{width: '100%', bgcolor: 'background.paper'}}>
       {
-        colleges.map(college => <CollegeItem key={college.id} college={college} />)
+        colleges.map(college => <CollegeItem key={college.id} college={college}
+                                             handleSchoolSelect={handleSchoolSelect}/>)
       }
     </List>
   );
