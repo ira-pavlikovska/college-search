@@ -10,7 +10,7 @@ import CollegeSearchPage from "./pages/CollegeSearchPage";
 
 function App() {
   return (
-    <div style={{backgroundColor: '#ced7e0'}}>
+    <div>
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<CollegeSearchPage/>}/>
