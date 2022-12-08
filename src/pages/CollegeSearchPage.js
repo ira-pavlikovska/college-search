@@ -7,14 +7,6 @@ import {InputAdornment} from "@mui/material";
 import {ContainerItem, SearchIcon, SearchInput} from "./CollegeSearchPage.styled";
 import MapComponent from "../components/MapComponent";
 
-// The places I want to create markers for.
-const initPlaces = [
-  // { id: "place1", pos: { lat: 39.09366509575983, lng: -94.58751660204751 } },
-  // { id: "place2", pos: { lat: 39.10894664788252, lng: -94.57926449532226 } },
-  // { id: "place3", pos: { lat: 39.07602397235644, lng: -94.5184089401211 } }
-];
-
-
 export default function CollegeSearchPage() {
 
   const [keyword, setKeyword] = useState('')
@@ -22,19 +14,21 @@ export default function CollegeSearchPage() {
   const [selectedCollege, setSelectedCollege] = useState()
 
   const handleSchoolSelect = (college) => {
-    console.log(`selected ${college['school.name']} on the page`)
     setSelectedCollege(college)
+    setColleges(colleges.map(col => {
+      if(col['school.name'] === college['school.name']) {
+        return {...col, isSelected: true}
+      } else {
+        return {...col, isSelected: false}
+      }
+    }))
   }
 
   useEffect(() => {
     setSelectedCollege(null)
     getSchools(keyword)
-      .then((resp) => {
-        // console.log(JSON.stringify(resp.data.results))
-        setColleges(resp.data.results)
-      })
+      .then((resp) => setColleges(resp.data.results))
       .catch(err => console.log(err))
-
   }, [keyword])
 
   return (

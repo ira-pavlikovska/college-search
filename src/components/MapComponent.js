@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-
 import {
   useJsApiLoader,
   GoogleMap,
   Marker,
   InfoWindow
 } from "@react-google-maps/api";
+import {GOOGLE_MAPS_API_KEY} from "../constants";
 
 const school2place = (school) => {
   return {
@@ -28,7 +28,7 @@ export default function MapComponent({college}) {
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     // Enter your own Google Maps API key
-    googleMapsApiKey: ""
+    googleMapsApiKey: GOOGLE_MAPS_API_KEY
   });
 
 
