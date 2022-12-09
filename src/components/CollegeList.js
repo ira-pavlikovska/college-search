@@ -10,7 +10,10 @@ const CollegeItem = ({college, handleSchoolSelect}) => {
       onClick={() => handleSchoolSelect(college)}
       alignItems="flex-start"
       divider={true}
-      style={{backgroundColor: college.isSelected ? '#ebeef2' : '#ffffff'}}
+      style={{
+        backgroundColor: college.isSelected ? '#ebeef2' : '#ffffff',
+        cursor: "pointer"
+      }}
     >
       <ListItemText
         primary={college['school.name']}
